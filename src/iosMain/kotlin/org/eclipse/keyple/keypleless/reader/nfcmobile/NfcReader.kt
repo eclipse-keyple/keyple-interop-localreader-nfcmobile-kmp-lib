@@ -93,6 +93,7 @@ internal object ReaderInstance {
 
 actual class LocalNfcReader(private val getErrorMsg: (e: Exception) -> String) {
   actual var scanMessage: String = "Place your card on the top of your iPhone"
+  actual var name = "iOS-NFC"
 
   init {
     ReaderInstance.getErrorMsg = getErrorMsg

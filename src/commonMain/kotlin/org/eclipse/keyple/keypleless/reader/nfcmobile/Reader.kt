@@ -12,15 +12,17 @@
 package org.eclipse.keyple.keypleless.reader.nfcmobile
 
 import kotlinx.coroutines.sync.Mutex
+import org.eclipse.keyple.keypleless.distributed.client.spi.LocalReader
+import org.eclipse.keyple.keypleless.distributed.client.spi.ReaderIOException
 
-class MultiplatformReader(private val nfcReader: LocalNfcReader) {
+class MultiplatformReader(private val nfcReader: LocalNfcReader) : LocalReader {
   private val mutex = Mutex()
 
-  fun setScanMessage(msg: String) {
+  override fun setScanMessage(msg: String) {
     nfcReader.scanMessage = msg
   }
 
-  suspend fun waitForCardPresent(): Boolean {
+  override suspend fun waitForCardPresent(): Boolean {
     if (mutex.isLocked) {
       throw ReaderIOException("Reader is already in use")
     }
@@ -32,7 +34,7 @@ class MultiplatformReader(private val nfcReader: LocalNfcReader) {
     }
   }
 
-  suspend fun startCardDetection(onCardFound: () -> Unit) {
+  override suspend fun startCardDetection(onCardFound: () -> Unit) {
     if (mutex.isLocked) {
       throw ReaderIOException("Reader is already in use")
     }
@@ -49,7 +51,7 @@ class MultiplatformReader(private val nfcReader: LocalNfcReader) {
     }
   }
 
-  suspend fun openPhysicalChannel() {
+  override suspend fun openPhysicalChannel() {
     if (mutex.isLocked) {
       throw ReaderIOException("Reader is already in use")
     }
@@ -62,15 +64,19 @@ class MultiplatformReader(private val nfcReader: LocalNfcReader) {
     }
   }
 
-  fun closePhysicalChannel() {
+  override fun closePhysicalChannel() {
     nfcReader.closePhysicalChannel()
   }
 
-  fun getPowerOnData(): String {
+  override fun getPowerOnData(): String {
     return nfcReader.getPowerOnData()
   }
 
-  suspend fun transmitApdu(commandApdu: ByteArray): ByteArray {
+  override fun name(): String {
+    return nfcReader.name
+  }
+
+  override suspend fun transmitApdu(commandApdu: ByteArray): ByteArray {
     if (mutex.isLocked) {
       throw ReaderIOException("Reader is already in use")
     }
@@ -83,7 +89,7 @@ class MultiplatformReader(private val nfcReader: LocalNfcReader) {
     }
   }
 
-  fun release() {
+  override fun release() {
     nfcReader.releaseReader()
     if (mutex.isLocked) {
       mutex.unlock()
@@ -93,6 +99,7 @@ class MultiplatformReader(private val nfcReader: LocalNfcReader) {
 
 expect class LocalNfcReader {
   var scanMessage: String
+  var name: String
 
   /**
    * Waits for a card to be inserted in the reader
@@ -151,9 +158,3 @@ expect class LocalNfcReader {
    */
   fun transmitApdu(commandApdu: ByteArray): ByteArray
 }
-
-class UnexpectedStatusWordException(message: String) : Exception(message)
-
-class ReaderIOException(message: String) : Exception(message)
-
-class CardIOException(message: String) : Exception(message)

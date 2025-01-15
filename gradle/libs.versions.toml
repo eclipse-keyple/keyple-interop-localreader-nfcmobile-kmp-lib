@@ -9,12 +9,14 @@ kotlinxSerialization = "1.7.3"
 napier = "2.7.1"
 dokka = "1.9.10"
 jdk = "17"
+keyple-less = "0.1.4+"
 
 [libraries]
 
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinxSerialization" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime" }
+keypleless-distributed-client-kmp-lib = { module = "org.eclipse.keyple:keypleless-distributed-client-kmp-lib", version.ref = "keyple-less" }
 
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 

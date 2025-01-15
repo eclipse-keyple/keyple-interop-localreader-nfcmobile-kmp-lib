@@ -25,6 +25,7 @@ import io.github.aakira.napier.Napier
 import java.io.IOException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.channels.Channel
+import org.eclipse.keyple.keypleless.distributed.client.spi.CardIOException
 
 private const val TAG = "NFCReader"
 
@@ -33,6 +34,7 @@ actual class LocalNfcReader(private val activity: Activity) {
   private var isoDep: IsoDep? = null
   private var channel: Channel<Tag>? = null
   actual var scanMessage: String = ""
+  actual var name = "AndroidNFC"
 
   actual suspend fun startCardDetection(onCardFound: () -> Unit) {
     Napier.d(tag = TAG, message = "startCardDetection")

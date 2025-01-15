@@ -35,12 +35,13 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.keypleless.distributed.client.kmp.lib)
 
             implementation(libs.kotlinx.coroutines)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization)
 
-            api(libs.napier)
+            implementation(libs.napier)
         }
 
         androidMain.dependencies {

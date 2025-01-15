@@ -22,6 +22,7 @@ private const val TAG = "NFCReader"
 
 actual class LocalNfcReader(val readerNameFilter: String = "*") {
   actual var scanMessage: String = ""
+  actual var name = "JvmNFC"
 
   private var card: Card? = null
   private var channel: CardChannel? = null
@@ -42,6 +43,7 @@ actual class LocalNfcReader(val readerNameFilter: String = "*") {
         for (terminal: CardTerminal in terminals) {
           if (terminal.name.contains(readerNameFilter, ignoreCase = true)) {
             reader = terminal
+            name = terminal.name
             Napier.d(tag = TAG, message = "Using CardTerminal: ${terminal.name}")
             break
           }
