@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.eclipse.keyple.keypleless.reader.nfcmobile
+package org.eclipse.keyple.interop.localreader.nfcmobile
 
 import io.github.aakira.napier.Napier
 import javax.smartcardio.Card

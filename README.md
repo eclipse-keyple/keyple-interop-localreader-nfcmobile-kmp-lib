@@ -1,7 +1,7 @@
 # Keyple Kotlin Multiplatform NFC Reader Library
 
 ## Overview
-The **Keyple NFC Reader KMP Library** is a Kotlin Multiplatform implementation enabling NFC card communications across
+The **Keyple Interop NFC Mobile Local Reader Library** is a Kotlin Multiplatform implementation enabling NFC card communications across
 Android, iOS and desktop platforms. This library provides an abstraction layer for NFC communications, making it easier
 to develop cross-platform applications.
 
@@ -15,7 +15,7 @@ Full documentation available at [keyple.org](https://keyple.org)
 
 ## Build
 The code is built with **Gradle** and targets **Android**, **iOS**, and **JVM** platforms.
-This library depends on [keypleless-distributed-client-kmp-lib](https://github.com/eclipse-keyple/keypleless-distributed-client-kmp-lib).
+This library depends on [keyple-interop-jsonapi-client-kmp-lib](https://github.com/eclipse-keyple/keyple-interop-jsonapi-client-kmp-lib).
 Ensure it's available through public maven repos, or by publishing it yourself locally prior to this library. 
 To build and publish the artifacts for all supported targets locally, use:
 ```
@@ -25,4 +25,4 @@ Note: you need to use a mac to build or use iOS artifacts. Learn more about [Kot
 
 ## API Documentation
 API documentation & class diagrams are available
-at [docs.keyple.org/keypleless-reader-nfcmobile-kmp-lib](https://docs.keyple.org/keypleless-reader-nfcmobile-kmp-lib/)
+at [docs.keyple.org/keyple-interop-localreader-nfcmobile-kmp-lib](https://docs.keyple.org/keyple-interop-localreader-nfcmobile-kmp-lib/)

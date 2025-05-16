@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.eclipse.keyple.keypleless.reader.nfcmobile
+package org.eclipse.keyple.interop.localreader.nfcmobile
 
 import android.app.Activity
 import android.app.PendingIntent
@@ -25,7 +25,7 @@ import io.github.aakira.napier.Napier
 import java.io.IOException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.channels.Channel
-import org.eclipse.keyple.keypleless.distributed.client.spi.CardIOException
+import org.eclipse.keyple.interop.jsonapi.client.spi.CardIOException
 
 private const val TAG = "NFCReader"
 

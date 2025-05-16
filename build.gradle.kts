@@ -17,7 +17,7 @@ kotlin {
             iosSimulatorArm64(),
         ).forEach { iosTarget ->
             iosTarget.binaries.framework {
-                baseName = "keyplelessreader"
+                baseName = "keypleinteropreadernfcmobile"
                 isStatic = false
             }
         }
@@ -35,7 +35,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.keypleless.distributed.client.kmp.lib)
+            implementation(libs.keyple.interop.jsonapi.client.kmp.lib)
 
             implementation(libs.kotlinx.coroutines)
             implementation(libs.kotlinx.datetime)
@@ -56,7 +56,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.eclipse.keyple.keypleless.reader.nfcmobile"
+    namespace = "org.eclipse.keyple.interop.localreader.nfcmobile"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

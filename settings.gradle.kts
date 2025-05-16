@@ -1,4 +1,4 @@
-rootProject.name = "keypleless-reader-nfcmobile-kmp-lib"
+rootProject.name = "keyple-interop-localreader-nfcmobile-kmp-lib"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

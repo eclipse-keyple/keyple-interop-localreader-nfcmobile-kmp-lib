@@ -9,13 +9,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.eclipse.keyple.keypleless.reader.nfcmobile
+package org.eclipse.keyple.interop.localreader.nfcmobile
 
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.sync.Mutex
-import org.eclipse.keyple.keypleless.distributed.client.spi.CardIOException
-import org.eclipse.keyple.keypleless.distributed.client.spi.LocalReader
-import org.eclipse.keyple.keypleless.distributed.client.spi.ReaderIOException
+import org.eclipse.keyple.interop.jsonapi.client.spi.LocalReader
+import org.eclipse.keyple.interop.jsonapi.client.spi.CardIOException
+import org.eclipse.keyple.interop.jsonapi.client.spi.ReaderIOException
+
+private const val TAG = "NFCReader"
 
 /**
  * An implementation of Keyple-less LocalReader that provides NFC reading capability for Android,
@@ -48,7 +50,7 @@ class MultiplatformNfcReader(private val nfcReader: LocalNfcReader) : LocalReade
         throw ReaderIOException("Reader is already in use")
       }
       nfcReader.startCardDetection {
-        Napier.d(tag = "NFCReader", message = "Card found")
+        Napier.d(tag = TAG, message = "Card found")
         mutex.unlock()
         onCardFound()
       }
