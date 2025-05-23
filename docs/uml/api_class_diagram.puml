@@ -1,0 +1,114 @@
+@startuml
+title
+    Keyple - keyple-interop-localreader-nfcmobile-kmp-lib - 1.0.+ (2025-05-21)
+end title
+
+' == THEME ==
+
+'Couleurs issues de : https://htmlcolorcodes.com/fr/tableau-de-couleur/tableau-de-couleur-design-plat/
+!define C_GREY1 F8F9F9
+!define C_GREY2 F2F3F4
+!define C_GREY3 E5E7E9
+!define C_GREY4 D7DBDD
+!define C_GREY5 CACFD2
+!define C_GREY6 BDC3C7
+!define C_LINK 3498DB
+!define C_USE 27AE60
+!define C_THROW 2C3E50
+
+' -- Styles that don't work with new version of plantuml --
+skinparam stereotypeABorderColor #A9DCDF
+skinparam stereotypeIBorderColor #B4A7E5
+skinparam stereotypeCBorderColor #ADD1B2
+skinparam stereotypeEBorderColor #EB93DF
+' -- END --
+
+skinparam ClassBorderThickness 2
+skinparam ArrowThickness 2
+
+' Yellow
+skinparam ClassBackgroundColor #FEFECE
+skinparam ClassBorderColor #D4AC0D
+' Red
+skinparam ClassBackgroundColor<<red>> #FDEDEC
+skinparam ClassBorderColor<<red>> #E74C3C
+hide <<red>> stereotype
+' Purple
+skinparam ClassBackgroundColor<<purple>> #F4ECF7
+skinparam ClassBorderColor<<purple>> #8E44AD
+hide <<purple>> stereotype
+' blue
+skinparam ClassBackgroundColor<<blue>> #EBF5FB
+skinparam ClassBorderColor<<blue>> #3498DB
+hide <<blue>> stereotype
+' Green
+skinparam ClassBackgroundColor<<green>> #E9F7EF
+skinparam ClassBorderColor<<green>> #27AE60
+hide <<green>> stereotype
+' Grey
+skinparam ClassBackgroundColor<<grey>> #EAECEE
+skinparam ClassBorderColor<<grey>> #2C3E50
+hide <<grey>> stereotype
+
+' == CONTENT ==
+
+legend top
+    __Colors legend__ :
+    * __External public API references__ :
+    ** <back:yellow>**keyple-interop-jsonapi-client-kmp-lib**</back>
+end legend
+
+package "org.eclipse.keyple.interop.localreader.nfcmobile" as root {
+    +class "<<<back:yellow>LocalReader</back>>>\nMultiplatformNfcReader" as MultiplatformNfcReader {
+        +MultiplatformNfcReader(\n\t**private val** nfcReader: LocalNfcReader\n)
+        -- **LocalReader** --
+        +getName(): String
+        +setScanMessage(message: String)
+
+        +**suspend** waitForCardPresent(): Boolean
+        +startCardDetection(onCardDetected: () -> Unit)
+
+        +openPhysicalChannel()
+        +closePhysicalChannel()
+
+        +getPowerOnData(): String
+        +transmitApdu(commandApdu: ByteArray): ByteArray
+
+        +release()
+    }
+    +class "**expect** LocalNfcReader" as LocalNfcReader {
+        +**var** scanMessage: String
+        +**var** name: String
+
+        +**suspend** waitForCardPresent(): Boolean
+        +startCardDetection(onCardDetected: () -> Unit)
+
+        +openPhysicalChannel()
+        +closePhysicalChannel()
+
+        +getPowerOnData(): String
+        +transmitApdu(commandApdu: ByteArray): ByteArray
+
+        +releaseReader()
+    }
+    +class "<< Android >>\n**actual** LocalNfcReader" as LocalNfcReaderAndroid extends LocalNfcReader {
+        +LocalNfcReader(\n\t**private val** activity: Activity\n)
+    }
+    +class "<< iOS >>\n**actual** LocalNfcReader" as LocalNfcReaderIOS extends LocalNfcReader {
+        +LocalNfcReader(\n\t**private val** getErrorMsg: (e: Exception) -> String\n)
+    }
+}
+
+' Associations
+
+MultiplatformNfcReader o-right- "1" LocalNfcReader #C_LINK
+MultiplatformNfcReader +-right- LocalNfcReader #C_LINK
+
+' == LAYOUT ==
+
+
+' == STYLE ==
+
+package root #C_GREY1 {}
+
+@enduml

@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.eclipse.keyple.interop.localreader.nfcmobile
+package org.eclipse.keyple.interop.localreader.nfcmobile.api
 
 import io.github.aakira.napier.Napier
 import javax.smartcardio.Card
@@ -18,9 +18,18 @@ import javax.smartcardio.CardTerminal
 import javax.smartcardio.CommandAPDU
 import javax.smartcardio.TerminalFactory
 
-private const val TAG = "NFCReader"
-
+/**
+ * WARNING: Experimental. This code is not intended to be used in production and will be removed
+ * soon!
+ */
+@Deprecated(
+    "Experimental. This code is not intended to be used in production and will be removed soon!")
 actual class LocalNfcReader(val readerNameFilter: String = "*") {
+
+  private companion object {
+    private const val TAG = "NFCReader"
+  }
+
   actual var scanMessage: String = ""
   actual var name = "JvmNFC"
 
@@ -63,13 +72,13 @@ actual class LocalNfcReader(val readerNameFilter: String = "*") {
     return false
   }
 
-  actual fun startCardDetection(onCardFound: () -> Unit) {
+  actual fun startCardDetection(onCardDetected: () -> Unit) {
     selectReader()
     reader?.let {
       it.waitForCardPresent(0)
       card = it.connect("T=1")
       Napier.d(tag = TAG, message = "Card present: $card")
-      onCardFound()
+      onCardDetected()
     }
   }
 

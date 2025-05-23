@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  ************************************************************************************** */
-package org.eclipse.keyple.interop.localreader.nfcmobile
+package org.eclipse.keyple.interop.localreader.nfcmobile.api
 
 import android.app.Activity
 import android.app.PendingIntent
@@ -25,21 +25,24 @@ import io.github.aakira.napier.Napier
 import java.io.IOException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.channels.Channel
-import org.eclipse.keyple.interop.jsonapi.client.spi.CardIOException
-
-private const val TAG = "NFCReader"
+import org.eclipse.keyple.interop.jsonapi.client.api.CardIOException
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class LocalNfcReader(private val activity: Activity) {
+
+  private companion object {
+    private const val TAG = "NFCReader"
+  }
+
   private var tag: Tag? = null
   private var isoDep: IsoDep? = null
   private var channel: Channel<Tag>? = null
   actual var scanMessage: String = ""
   actual var name = "AndroidNFC"
 
-  actual fun startCardDetection(onCardFound: () -> Unit) {
+  actual fun startCardDetection(onCardDetected: () -> Unit) {
     Napier.d(tag = TAG, message = "startCardDetection")
-    enableForeground { onCardFound() }
+    enableForeground { onCardDetected() }
   }
 
   private fun enableForeground(cardCallback: (Tag) -> Unit) {

@@ -11,7 +11,7 @@
  ************************************************************************************** */
 @file:OptIn(ExperimentalStdlibApi::class, BetaInteropApi::class)
 
-package org.eclipse.keyple.interop.localreader.nfcmobile
+package org.eclipse.keyple.interop.localreader.nfcmobile.api
 
 import io.github.aakira.napier.Napier
 import kotlin.coroutines.resume
@@ -29,8 +29,8 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.eclipse.keyple.interop.jsonapi.client.spi.CardIOException
-import org.eclipse.keyple.interop.jsonapi.client.spi.ReaderIOException
+import org.eclipse.keyple.interop.jsonapi.client.api.CardIOException
+import org.eclipse.keyple.interop.jsonapi.client.api.ReaderIOException
 import platform.CoreNFC.NFCISO7816APDU
 import platform.CoreNFC.NFCISO7816TagProtocol
 import platform.CoreNFC.NFCPollingISO14443
@@ -121,8 +121,8 @@ actual class LocalNfcReader(private val getErrorMsg: (e: Exception) -> String) {
     return nfcTag != null
   }
 
-  actual fun startCardDetection(onCardFound: () -> Unit) {
-    startiOSCardDetection { ReaderInstance.getCard()?.let { onCardFound() } }
+  actual fun startCardDetection(onCardDetected: () -> Unit) {
+    startiOSCardDetection { ReaderInstance.getCard()?.let { onCardDetected() } }
   }
 
   private fun startiOSCardDetection(onConnected: () -> Unit) {

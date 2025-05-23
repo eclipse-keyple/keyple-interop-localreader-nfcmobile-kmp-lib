@@ -1,5 +1,5 @@
 module keypleinterop.readerjvm {
-    exports org.eclipse.keyple.interop.localreader.nfcmobile;
+    exports org.eclipse.keyple.interop.localreader.nfcmobile.api;
     requires java.smartcardio;
 
     requires kotlin.stdlib;
