@@ -1,7 +1,7 @@
 #!groovy
 pipeline {
   environment {
-    PROJECT_NAME = "keyple-service-java-lib"
+    PROJECT_NAME = "keyple-interop-localreader-nfcmobile-kmp-lib"
     PROJECT_BOT_NAME = "Eclipse Keyple Bot"
   }
   agent { kubernetes { yaml javaBuilder('2.0') } }
