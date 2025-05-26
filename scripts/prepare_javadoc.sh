@@ -18,23 +18,18 @@ git clone https://github.com/eclipse-keyple/$repository_name.git
 
 cd $repository_name
 
-echo "Checkout gh-pages branch..."
-git checkout -f gh-pages
+echo "Checkout doc branch..."
+git checkout -f doc
 
-echo "Delete existing SNAPSHOT directories except the current one..."
-for snapshot in *-SNAPSHOT/; do
-    if [ "$snapshot" != "$version/" ]; then
-        echo "Removing old SNAPSHOT: $snapshot"
-        rm -rf "$snapshot"
-    fi
-done
+echo "Delete existing SNAPSHOT directory..."
+rm -rf *-SNAPSHOT
 
 echo "Create target directory $version..."
 mkdir $version
 
-echo "Copy Dokka doc files..."
-cp -rf ../build/dokka/* $version/
-
+echo "Copy javadoc and uml files..."
+cp -rf ../build/docs/javadoc/* $version/
+cp -rf ../src/main/uml/api_*.svg $version/
 # Find the latest stable version (first non-SNAPSHOT)
 latest_stable=$(ls -d [0-9]*/ | grep -v SNAPSHOT | cut -f1 -d'/' | sort -Vr | head -n1)
 
@@ -64,11 +59,18 @@ sorted_dirs=$(ls -d [0-9]*/ | cut -f1 -d'/' | sort -Vr)
 # Loop through each sorted directory
 for directory in $sorted_dirs
 do
-    # If this is the stable version, write latest-stable entry first
-    if [ "$directory" = "$latest_stable" ]; then
-        echo "| latest-stable ($latest_stable) | [API documentation](latest-stable) |" >> list_versions.md
-    fi
-    echo "| $directory | [API documentation]($directory) |" >> list_versions.md
+  diagrams=""
+  for diagram in `ls $directory/api_*.svg | cut -f2 -d'/'`
+  do
+    name=`echo "$diagram" | tr _ " " | cut -f1 -d'.' | sed -r 's/^api/API/g'`
+    diagrams="$diagrams<br>[$name]($directory/$diagram)"
+  done
+  # If this is the stable version, write latest-stable entry first
+  if [ "$directory" = "$latest_stable" ]; then
+      echo "| **$directory (latest stable)** | [API documentation](latest-stable)$diagrams |" >> list_versions.md
+  else
+      echo "| $directory | [API documentation]($directory)$diagrams |" >> list_versions.md
+  fi
 done
 
 echo "Computed all versions:"
