@@ -8,6 +8,8 @@ plugins {
     id("maven-publish")
 }
 
+apply(plugin = "org.eclipse.keyple")
+
 kotlin {
     jvmToolchain(libs.versions.jdk.get().toInt())
 
@@ -62,14 +64,6 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-}
-
-publishing {
-    repositories {
-        mavenLocal {
-            //...
-        }
     }
 }
 

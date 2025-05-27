@@ -9,7 +9,7 @@ kotlinxSerialization = "1.7.3"
 napier = "2.7.1"
 dokka = "1.9.10"
 jdk = "17"
-keyple-interop = "0.1.6+"
+keyple-interop = "0.1.6-SNAPSHOT"
 
 [libraries]
 
