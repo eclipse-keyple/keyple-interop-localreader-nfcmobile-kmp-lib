@@ -27,9 +27,9 @@ rm -rf *-SNAPSHOT
 echo "Create target directory $version..."
 mkdir $version
 
-echo "Copy javadoc and uml files..."
-cp -rf ../build/docs/javadoc/* $version/
-cp -rf ../src/main/uml/api_*.svg $version/
+echo "Copy dokka and uml files..."
+cp -rf ../build/dokka/* $version/
+cp -rf ../docs/uml/api_*.svg $version/
 # Find the latest stable version (first non-SNAPSHOT)
 latest_stable=$(ls -d [0-9]*/ | grep -v SNAPSHOT | cut -f1 -d'/' | sort -Vr | head -n1)
 
