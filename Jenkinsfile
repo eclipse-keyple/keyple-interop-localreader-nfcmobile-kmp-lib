@@ -39,7 +39,7 @@ pipeline {
       when { expression { deploySnapshot } }
       steps { container('java-builder') {
         configFileProvider([configFile(fileId: 'gradle.properties', targetLocation: '/home/jenkins/agent/gradle.properties')]) {
-          sh './gradlew clean build publish --info --stacktrace'
+          sh './gradlew clean build dokkaHtml publish --info --stacktrace'
         }
         junit testResults: 'build/test-results/test/*.xml', allowEmptyResults: true
       } }
@@ -48,7 +48,7 @@ pipeline {
       when { expression { deployRelease } }
       steps { container('java-builder') {
         configFileProvider([configFile(fileId: 'gradle.properties', targetLocation: '/home/jenkins/agent/gradle.properties')]) {
-          sh './gradlew clean build release --info --stacktrace'
+          sh './gradlew clean build dokkaHtml release --info --stacktrace'
         }
         junit testResults: 'build/test-results/test/*.xml', allowEmptyResults: true
       } }
