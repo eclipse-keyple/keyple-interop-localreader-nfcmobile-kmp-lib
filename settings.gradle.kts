@@ -27,6 +27,7 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
+        maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
     }
 }
 
