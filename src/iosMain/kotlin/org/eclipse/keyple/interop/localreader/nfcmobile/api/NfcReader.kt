@@ -210,7 +210,7 @@ internal class NfcTag(private val tag: NFCISO7816TagProtocol) {
   // this call happens on a random thread (coroutine default dispatcher)
   suspend fun sendCommand(isoApdu: NFCISO7816APDU): ByteArray = suspendCoroutine { cont ->
     Napier.d(tag = TAG, message = "-- APDU:")
-    Napier.d(tag = TAG, message = "----> ${commandApdu.toHexString()}")
+    Napier.d(tag = TAG, message = "----> ${isoApdu.data?.toByteArray()?.toHexString()}")
     // this callback happens on the NFC_WORKER_QUEUE thread
     val onCommandResult = { data: NSData?, sw1: uint8_t, sw2: uint8_t, error: NSError? ->
       if (error != null) {
