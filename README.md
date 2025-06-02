@@ -19,7 +19,7 @@ This library depends on [keyple-interop-jsonapi-client-kmp-lib](https://github.c
 Ensure it's available through public maven repos, or by publishing it yourself locally prior to this library. 
 To build and publish the artifacts for all supported targets locally, use:
 ```
-./gradlew publishAllPublicationsToMavenLocalRepository
+./gradlew publishToMavenLocal
 ```
 Note: you need to use a mac to build or use iOS artifacts. Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
 
