@@ -12,12 +12,17 @@ plugins {
   `maven-publish`
 }
 
+val title: String by project
+val jvmToolchainVersion: String by project
+val javaSourceLevel: String by project
+val javaTargetLevel: String by project
+
 ///////////////////////////////////////////////////////////////////////////////
 //  APP CONFIGURATION
 ///////////////////////////////////////////////////////////////////////////////
 
 kotlin {
-  jvmToolchain(libs.versions.jdk.get().toInt())
+  jvmToolchain(jvmToolchainVersion.toInt())
   if (System.getProperty("os.name").lowercase().contains("mac")) {
     listOf(
             iosX64(),
@@ -32,7 +37,7 @@ kotlin {
         }
   }
   androidTarget { publishLibraryVariants("release") }
-  jvm { kotlin { jvmToolchain(libs.versions.jdk.get().toInt()) } }
+  jvm { kotlin { jvmToolchain(jvmToolchainVersion.toInt()) } }
   sourceSets {
     commonMain.dependencies {
       implementation(libs.keyple.interop.jsonapi.client.kmp.lib)
@@ -58,9 +63,6 @@ if (project.hasProperty("releaseTag")) {
   println("Development mode: version is ${project.version}")
 }
 
-val title: String by project
-val javaSourceLevel: String by project
-val javaTargetLevel: String by project
 val generatedOverviewFile = layout.buildDirectory.file("tmp/overview-dokka.md")
 val dokkaOutputDir = layout.buildDirectory.dir("dokkaHtml")
 
@@ -68,6 +70,10 @@ android {
   namespace = project.findProperty("androidLibNamespace") as String
   compileSdk = (project.findProperty("androidCompileSdk") as String).toInt()
   defaultConfig { minSdk = (project.findProperty("androidMinSdk") as String).toInt() }
+  compileOptions {
+    sourceCompatibility = JavaVersion.toVersion(javaSourceLevel)
+    targetCompatibility = JavaVersion.toVersion(javaTargetLevel)
+  }
   libraryVariants.all {
     outputs.all {
       val outputImpl = this as com.android.build.gradle.internal.api.LibraryVariantOutputImpl
