@@ -1,23 +1,19 @@
 [versions]
 agp = "8.6.1"
-android-compileSdk = "34"
-android-minSdk = "24"
 coroutines = "1.9.0"
 datetime = "0.6.1"
 kotlin = "2.0.21"
 kotlinxSerialization = "1.7.3"
 napier = "2.7.1"
 dokka = "1.9.10"
-jdk = "17"
+jdk="17"
 keyple-interop = "0.1.6-SNAPSHOT"
 
 [libraries]
-
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinxSerialization" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime" }
 keyple-interop-jsonapi-client-kmp-lib = { module = "org.eclipse.keyple:keyple-interop-jsonapi-client-kmp-lib", version.ref = "keyple-interop" }
-
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 
 [plugins]

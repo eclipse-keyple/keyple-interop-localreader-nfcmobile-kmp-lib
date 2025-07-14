@@ -1,108 +1,209 @@
+///////////////////////////////////////////////////////////////////////////////
+//  GRADLE CONFIGURATION
+///////////////////////////////////////////////////////////////////////////////
+
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.dokka)
-    id("com.diffplug.spotless")
-    id("org.sonarqube") version "3.1"
-    id("maven-publish")
+  alias(libs.plugins.kotlinMultiplatform)
+  alias(libs.plugins.androidLibrary)
+  alias(libs.plugins.kotlinSerialization)
+  id("com.diffplug.spotless") version "7.0.4"
+  id("org.jetbrains.dokka") version "1.9.20"
+  signing
+  `maven-publish`
 }
 
-apply(plugin = "org.eclipse.keyple")
+///////////////////////////////////////////////////////////////////////////////
+//  APP CONFIGURATION
+///////////////////////////////////////////////////////////////////////////////
 
 kotlin {
-    jvmToolchain(libs.versions.jdk.get().toInt())
-
-    if (System.getProperty("os.name").lowercase().contains("mac")) {
-        listOf(
+  jvmToolchain(libs.versions.jdk.get().toInt())
+  if (System.getProperty("os.name").lowercase().contains("mac")) {
+    listOf(
             iosX64(),
             iosArm64(),
             iosSimulatorArm64(),
-        ).forEach { iosTarget ->
-            iosTarget.binaries.framework {
-                baseName = "keypleinteropreadernfcmobile"
-                isStatic = false
-            }
+        )
+        .forEach { iosTarget ->
+          iosTarget.binaries.framework {
+            baseName = "keypleinteroplocalreadernfcmobilelib"
+            isStatic = false
+          }
         }
+  }
+  androidTarget { publishLibraryVariants("release") }
+  jvm { kotlin { jvmToolchain(libs.versions.jdk.get().toInt()) } }
+  sourceSets {
+    commonMain.dependencies {
+      implementation(libs.keyple.interop.jsonapi.client.kmp.lib)
+      implementation(libs.kotlinx.coroutines)
+      implementation(libs.kotlinx.datetime)
+      implementation(libs.kotlinx.serialization)
+      implementation(libs.napier)
     }
-
-    androidTarget {
-        publishLibraryVariants("release", "debug")
-    }
-
-    jvm {
-        kotlin {
-            jvmToolchain(libs.versions.jdk.get().toInt())
-        }
-    }
-
-    sourceSets {
-        commonMain.dependencies {
-            implementation(libs.keyple.interop.jsonapi.client.kmp.lib)
-
-            implementation(libs.kotlinx.coroutines)
-            implementation(libs.kotlinx.datetime)
-            implementation(libs.kotlinx.serialization)
-
-            implementation(libs.napier)
-        }
-
-        androidMain.dependencies {
-        }
-
-        iosMain.dependencies {
-        }
-
-        jvmMain.dependencies {
-        }
-    }
+    androidMain.dependencies {}
+    iosMain.dependencies {}
+    jvmMain.dependencies {}
+  }
 }
+
+///////////////////////////////////////////////////////////////////////////////
+//  STANDARD CONFIGURATION FOR KOTLIN-LIB MULTIPLATFORM PROJECTS
+///////////////////////////////////////////////////////////////////////////////
+
+if (project.hasProperty("releaseTag")) {
+  project.version = project.property("releaseTag") as String
+  println("Release mode: version set to ${project.version}")
+} else {
+  println("Development mode: version is ${project.version}")
+}
+
+val title: String by project
+val javaSourceLevel: String by project
+val javaTargetLevel: String by project
+val generatedOverviewFile = layout.buildDirectory.file("tmp/overview-dokka.md")
+val dokkaOutputDir = layout.buildDirectory.dir("dokkaHtml")
 
 android {
-    namespace = "org.eclipse.keyple.interop.localreader.nfcmobile"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
+  namespace = project.findProperty("androidLibNamespace") as String
+  compileSdk = (project.findProperty("androidCompileSdk") as String).toInt()
+  defaultConfig { minSdk = (project.findProperty("androidMinSdk") as String).toInt() }
+  libraryVariants.all {
+    outputs.all {
+      val outputImpl = this as com.android.build.gradle.internal.api.LibraryVariantOutputImpl
+      val variantName = name
+      val versionName = project.version.toString()
+      val newName = "${rootProject.name}-$versionName-$variantName.aar"
+      outputImpl.outputFileName = newName
     }
+  }
 }
 
-///////////////////////////////////////////////////////////////////////////////
-//  TASKS CONFIGURATION
-///////////////////////////////////////////////////////////////////////////////
+fun copyLicenseFiles() {
+  val metaInfDir = File(layout.buildDirectory.get().asFile, "resources/main/META-INF")
+  val licenseFile = File(project.rootDir, "LICENSE")
+  val noticeFile = File(project.rootDir, "NOTICE.md")
+  metaInfDir.mkdirs()
+  licenseFile.copyTo(File(metaInfDir, "LICENSE"), overwrite = true)
+  noticeFile.copyTo(File(metaInfDir, "NOTICE.md"), overwrite = true)
+}
+
+tasks.withType<AbstractArchiveTask>().configureEach { archiveBaseName.set(rootProject.name) }
+
 tasks {
-    dokkaHtml {
-        outputDirectory.set(layout.buildDirectory.dir("dokka"))
-
-        dokkaSourceSets {
-            configureEach {
-                includeNonPublic.set(false)
-                skipDeprecated.set(true)
-                reportUndocumented.set(true)
-                jdkVersion.set(libs.versions.jdk.get().toInt())
-            }
-        }
+  spotless {
+    kotlin {
+      target("src/**/*.kt")
+      licenseHeaderFile("${project.rootDir}/LICENSE_HEADER")
+      ktfmt()
     }
-
-    spotless {
-        kotlin {
-            target("**/*.kt")
-            ktfmt()
-            licenseHeaderFile("${project.rootDir}/LICENSE_HEADER")
-        }
+    kotlinGradle {
+      target("**/*.kts")
+      ktfmt()
     }
-
-    sonarqube {
-        properties {
-            property("sonar.projectKey", "eclipse_" + project.name)
-            property("sonar.organization", "eclipse")
-            property("sonar.host.url", "https://sonarcloud.io")
-            property("sonar.login", System.getenv("SONAR_LOGIN"))
-            System.getenv("BRANCH_NAME")?.let {
-                if (it != "main") {
-                    property("sonar.branch.name", it)
-                }
-            }
-        }
+  }
+  register("generateDokkaOverview") {
+    outputs.file(generatedOverviewFile)
+    doLast {
+      val file = generatedOverviewFile.get().asFile
+      file.parentFile.mkdirs()
+      file.writeText(
+          buildString {
+            appendLine("# Module $title")
+            appendLine()
+            appendLine(file("overview.md").takeIf { it.exists() }?.readText().orEmpty().trim())
+            appendLine()
+            appendLine("<br>")
+            appendLine()
+            appendLine("> ${project.findProperty("javadoc.copyright") as String}")
+          })
     }
+  }
+  named<org.jetbrains.dokka.gradle.DokkaTask>("dokkaHtml") {
+    dependsOn("generateDokkaOverview")
+    outputDirectory.set(dokkaOutputDir.get().asFile)
+    dokkaSourceSets.configureEach {
+      noAndroidSdkLink.set(false)
+      includeNonPublic.set(false)
+      includes.from(files(generatedOverviewFile))
+      moduleName.set(title)
+    }
+    doFirst { println("Generating Dokka HTML for ${project.name} version ${project.version}") }
+  }
+  register<Jar>("dokkaHtmlJar") {
+    dependsOn(dokkaHtml)
+    archiveClassifier.set("javadoc")
+    from(dokkaHtml.get().outputDirectory)
+  }
+}
+
+afterEvaluate {
+  tasks.withType<Jar>().configureEach {
+    from(layout.buildDirectory.dir("resources/main"))
+    doFirst { copyLicenseFiles() }
+    manifest {
+      attributes(
+          mapOf("Implementation-Title" to title, "Implementation-Version" to project.version))
+    }
+  }
+}
+
+publishing {
+  publications.withType<MavenPublication>().configureEach {
+    artifact(tasks["dokkaHtmlJar"])
+    pom {
+      name.set(project.findProperty("title") as String)
+      description.set(project.findProperty("description") as String)
+      url.set(project.findProperty("project.url") as String)
+      licenses {
+        license {
+          name.set(project.findProperty("license.name") as String)
+          url.set(project.findProperty("license.url") as String)
+          distribution.set(project.findProperty("license.distribution") as String)
+        }
+      }
+      developers {
+        developer {
+          name.set(project.findProperty("developer.name") as String)
+          email.set(project.findProperty("developer.email") as String)
+        }
+      }
+      organization {
+        name.set(project.findProperty("organization.name") as String)
+        url.set(project.findProperty("organization.url") as String)
+      }
+      scm {
+        connection.set(project.findProperty("scm.connection") as String)
+        developerConnection.set(project.findProperty("scm.developerConnection") as String)
+        url.set(project.findProperty("scm.url") as String)
+      }
+      ciManagement {
+        system.set(project.findProperty("ci.system") as String)
+        url.set(project.findProperty("ci.url") as String)
+      }
+      properties.set(
+          mapOf(
+              "project.build.sourceEncoding" to "UTF-8",
+              "maven.compiler.source" to javaSourceLevel,
+              "maven.compiler.target" to javaTargetLevel))
+    }
+  }
+  repositories {
+    maven {
+      if (project.hasProperty("sonatypeURL")) {
+        url = uri(project.property("sonatypeURL") as String)
+        credentials {
+          username = project.property("sonatypeUsername") as String
+          password = project.property("sonatypePassword") as String
+        }
+      }
+    }
+  }
+}
+
+signing {
+  if (project.hasProperty("releaseTag")) {
+    useGpgCmd()
+    sign(publishing.publications["mavenJava"])
+  }
 }
