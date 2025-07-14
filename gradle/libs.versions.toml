@@ -5,7 +5,8 @@ datetime = "0.6.1"
 kotlin = "2.0.21"
 kotlinxSerialization = "1.7.3"
 napier = "2.7.1"
-dokka = "1.9.10"
+spotless = "7.0.4"
+dokka = "1.9.20"
 keyple-interop = "0.1.6-SNAPSHOT"
 
 [libraries]
@@ -19,4 +20,5 @@ napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }

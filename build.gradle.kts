@@ -6,8 +6,8 @@ plugins {
   alias(libs.plugins.kotlinMultiplatform)
   alias(libs.plugins.androidLibrary)
   alias(libs.plugins.kotlinSerialization)
-  id("com.diffplug.spotless") version "7.0.4"
-  id("org.jetbrains.dokka") version "1.9.20"
+  alias(libs.plugins.spotless)
+  alias(libs.plugins.dokka)
   signing
   `maven-publish`
 }
