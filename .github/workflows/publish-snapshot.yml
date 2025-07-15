@@ -7,4 +7,6 @@ on:
 jobs:
   publish-snapshot:
     uses: eclipse-keyple/keyple-actions/.github/workflows/reusable-publish-snapshot.yml@publish-snapshot-v1
+    with:
+      runner: 'macos-latest'
     secrets: inherit

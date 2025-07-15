@@ -7,3 +7,5 @@ on:
 jobs:
   build-and-test:
     uses: eclipse-keyple/keyple-actions/.github/workflows/reusable-build-and-test.yml@build-and-test-v1
+    with:
+      runner: 'macos-latest'
