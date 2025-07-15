@@ -11,7 +11,7 @@ Full documentation available at [keyple.org](https://keyple.org)
 ## Supported Platforms
 - Android 7.0+ (API 24+)
 - iOS (CoreNFC)
-- JVM 17+
+- JVM 11+
 
 ## Build
 The code is built with **Gradle** and targets **Android**, **iOS**, and **JVM** platforms.

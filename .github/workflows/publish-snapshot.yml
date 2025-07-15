@@ -9,4 +9,5 @@ jobs:
     uses: eclipse-keyple/keyple-actions/.github/workflows/reusable-publish-snapshot.yml@publish-snapshot-v1
     with:
       runner: 'macos-latest'
+      java-version: '11'
     secrets: inherit
