@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Keyple Interop Local Reader NFC Mobile Library</title>
+    <link href="images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="scripts/sourceset_dependencies.js" async="async"></script>
+<link href="styles/style.css" rel="Stylesheet">
+<link href="styles/main.css" rel="Stylesheet">
+<link href="styles/prism.css" rel="Stylesheet">
+<link href="styles/logo-styles.css" rel="Stylesheet">
+<link href="styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="index.html">
+                            Keyple Interop Local Reader NFC Mobile Library
+                    </a>
+            </div>
+            <div class="library-version">
+0.1.6            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":dokkaHtml/androidMain">android</button>
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":dokkaHtml/commonMain">common</button>
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":dokkaHtml/iosMain">ios</button>
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":dokkaHtml/jvmMain">jvm</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" id="content" pageIds="Keyple Interop Local Reader NFC Mobile Library::////PointingToDeclaration//1740993208">
+  <div class="breadcrumbs"></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Keyple</span></span> <span><span>Interop</span></span> <span><span>Local</span></span> <span><span>Reader</span></span> <span><span>NFC</span></span> <span><span>Mobile</span></span> <span><span>Library</span></span></h1>
+    <div class="platform-hinted UnderCoverText with-platform-tabs" data-platform-hinted="data-platform-hinted">
+      <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":dokkaHtml/androidMain" data-filterable-set=":dokkaHtml/androidMain" data-active="" data-toggle=":dokkaHtml/androidMain">android</button><button class="platform-bookmark" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain" data-toggle=":dokkaHtml/commonMain">common</button><button class="platform-bookmark" data-filterable-current=":dokkaHtml/iosMain" data-filterable-set=":dokkaHtml/iosMain" data-toggle=":dokkaHtml/iosMain">ios</button><button class="platform-bookmark" data-filterable-current=":dokkaHtml/jvmMain" data-filterable-set=":dokkaHtml/jvmMain" data-toggle=":dokkaHtml/jvmMain">jvm</button></div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/androidMain"><p class="paragraph">This document is the specification of the API dedicated to the Keyple Kotlin Multiplatform NFC Reader Library.<br>It provides an abstraction layer for NFC card communication across Android and iOS, enabling cross-platform applications to interact with NFC media through a unified interface.</p><p class="paragraph">Designed for interoperability, this library simplifies the integration of NFC functionality in Kotlin Multiplatform projects by abstracting platform-specific NFC access (CoreNFC on iOS, and Android NFC APIs).</p><p class="paragraph">It is typically used alongside the Keyple distributed client library to support remote NFC transactions, and is compatible with Kotlin-based builds targeting mobile environments.</p><br><blockquote class="quotation"><p class="paragraph">Copyright © Eclipse Foundation, Inc. All Rights Reserved.</p></blockquote></div><div class="content sourceset-dependent-content" data-togglable=":dokkaHtml/commonMain"><p class="paragraph">This document is the specification of the API dedicated to the Keyple Kotlin Multiplatform NFC Reader Library.<br>It provides an abstraction layer for NFC card communication across Android and iOS, enabling cross-platform applications to interact with NFC media through a unified interface.</p><p class="paragraph">Designed for interoperability, this library simplifies the integration of NFC functionality in Kotlin Multiplatform projects by abstracting platform-specific NFC access (CoreNFC on iOS, and Android NFC APIs).</p><p class="paragraph">It is typically used alongside the Keyple distributed client library to support remote NFC transactions, and is compatible with Kotlin-based builds targeting mobile environments.</p><br><blockquote class="quotation"><p class="paragraph">Copyright © Eclipse Foundation, Inc. All Rights Reserved.</p></blockquote></div><div class="content sourceset-dependent-content" data-togglable=":dokkaHtml/iosMain"><p class="paragraph">This document is the specification of the API dedicated to the Keyple Kotlin Multiplatform NFC Reader Library.<br>It provides an abstraction layer for NFC card communication across Android and iOS, enabling cross-platform applications to interact with NFC media through a unified interface.</p><p class="paragraph">Designed for interoperability, this library simplifies the integration of NFC functionality in Kotlin Multiplatform projects by abstracting platform-specific NFC access (CoreNFC on iOS, and Android NFC APIs).</p><p class="paragraph">It is typically used alongside the Keyple distributed client library to support remote NFC transactions, and is compatible with Kotlin-based builds targeting mobile environments.</p><br><blockquote class="quotation"><p class="paragraph">Copyright © Eclipse Foundation, Inc. All Rights Reserved.</p></blockquote></div><div class="content sourceset-dependent-content" data-togglable=":dokkaHtml/jvmMain"><p class="paragraph">This document is the specification of the API dedicated to the Keyple Kotlin Multiplatform NFC Reader Library.<br>It provides an abstraction layer for NFC card communication across Android and iOS, enabling cross-platform applications to interact with NFC media through a unified interface.</p><p class="paragraph">Designed for interoperability, this library simplifies the integration of NFC functionality in Kotlin Multiplatform projects by abstracting platform-specific NFC access (CoreNFC on iOS, and Android NFC APIs).</p><p class="paragraph">It is typically used alongside the Keyple distributed client library to support remote NFC transactions, and is compatible with Kotlin-based builds targeting mobile environments.</p><br><blockquote class="quotation"><p class="paragraph">Copyright © Eclipse Foundation, Inc. All Rights Reserved.</p></blockquote></div>    </div>
+  </div>
+  <h2 class="">Packages</h2>
+  <div class="table"><a data-name="-835104201%2FPackages%2F1740993208" anchor-label="org.eclipse.keyple.interop.localreader.nfcmobile.api" id="-835104201%2FPackages%2F1740993208" data-filterable-set=":dokkaHtml/androidMain,:dokkaHtml/commonMain,:dokkaHtml/iosMain,:dokkaHtml/jvmMain"></a>
+    <div class="table-row" data-filterable-current=":dokkaHtml/androidMain,:dokkaHtml/commonMain,:dokkaHtml/iosMain,:dokkaHtml/jvmMain" data-filterable-set=":dokkaHtml/androidMain,:dokkaHtml/commonMain,:dokkaHtml/iosMain,:dokkaHtml/jvmMain">
+      <div>
+        <div class="main-subrow ">
+          <div class=""><span class="inline-flex">
+              <div><a href="-keyple -interop -local -reader -n-f-c -mobile -library/org.eclipse.keyple.interop.localreader.nfcmobile.api/index.html">org.eclipse.keyple.interop.localreader.nfcmobile.api</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-835104201%2FPackages%2F1740993208"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+          <div class="pull-right">
+            <div class="platform-tags no-gutters">
+              <div class="platform-tag jvm-like">android</div>
+              <div class="platform-tag common-like">common</div>
+              <div class="platform-tag common-like">ios</div>
+              <div class="platform-tag jvm-like">jvm</div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
