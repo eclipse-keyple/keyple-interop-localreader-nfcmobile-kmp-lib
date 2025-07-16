@@ -156,7 +156,9 @@ afterEvaluate {
 
 publishing {
   publications.withType<MavenPublication>().configureEach {
-    artifact(tasks["dokkaHtmlJar"])
+    if (name.contains("Jvm", ignoreCase = true) || name.contains("Android", ignoreCase = true)) {
+      artifact(tasks["dokkaHtmlJar"])
+    }
     pom {
       name.set(project.findProperty("title") as String)
       description.set(project.findProperty("description") as String)
@@ -207,9 +209,19 @@ publishing {
   }
 }
 
-signing {
-  if (project.hasProperty("releaseTag")) {
-    useGpgCmd()
-    publishing.publications.withType<MavenPublication>().forEach { sign(it) }
+afterEvaluate {
+  signing {
+    if (project.hasProperty("releaseTag")) {
+      useGpgCmd()
+      publishing.publications.withType<MavenPublication>().forEach { sign(it) }
+      // region Fix Gradle warning about signing tasks using publishing task outputs without
+      // explicit dependencies
+      // <https://youtrack.jetbrains.com/issue/KT-46466>
+      tasks.withType<AbstractPublishToMaven>().configureEach {
+        val signingTasks = tasks.withType<Sign>()
+        mustRunAfter(signingTasks)
+      }
+      // endregion
+    }
   }
 }
