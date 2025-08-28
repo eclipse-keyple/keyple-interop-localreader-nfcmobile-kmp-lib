@@ -9,3 +9,28 @@ jobs:
     uses: eclipse-keyple/keyple-actions/.github/workflows/reusable-build-and-test.yml@build-and-test-v1
     with:
       runner: 'macos-latest'
+
+  reusable-build-and-test:
+    runs-on: macos-latest
+
+    defaults:
+      run:
+        working-directory: .
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Make Gradle wrapper executable
+        run: chmod +x ./gradlew
+
+      - name: Build and test
+        run: |
+          echo "Building and testing project..."
+          ./gradlew assembleXCFramework --info --stacktrace

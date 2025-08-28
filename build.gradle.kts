@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+
 ///////////////////////////////////////////////////////////////////////////////
 //  GRADLE CONFIGURATION
 ///////////////////////////////////////////////////////////////////////////////
@@ -24,6 +26,7 @@ val javaTargetLevel: String by project
 kotlin {
   jvmToolchain(jvmToolchainVersion.toInt())
   if (System.getProperty("os.name").lowercase().contains("mac")) {
+    val xcf = XCFramework()
     listOf(
             iosX64(),
             iosArm64(),
@@ -33,6 +36,7 @@ kotlin {
           iosTarget.binaries.framework {
             baseName = "keypleinteroplocalreadernfcmobilelib"
             isStatic = false
+            xcf.add(this)
           }
         }
   }
