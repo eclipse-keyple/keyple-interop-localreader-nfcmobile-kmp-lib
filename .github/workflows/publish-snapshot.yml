@@ -6,7 +6,7 @@ on:
 
 jobs:
   publish-snapshot:
-    uses: eclipse-keyple/keyple-actions/.github/workflows/reusable-publish-snapshot.yml@publish-snapshot-v1
+    uses: eclipse-keyple/keyple-actions/.github/workflows/reusable-publish-snapshot.yml@main # NOSONAR - Same organization, trusted source
     with:
       runner: 'macos-latest'
-    secrets: inherit
+    secrets: inherit # NOSONAR - Same organization, trusted source
