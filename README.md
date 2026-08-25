@@ -71,7 +71,7 @@ val result = terminal.executeRemoteService(serviceId = "MyService", inputData = 
 terminal.release()
 ```
 
-For a full, runnable example including a `SyncNetworkClient` implementation over HTTP, see [SimpleHttpNetworkClient](https://github.com/calypsonet/keyple-demo-ticketing-reloading-remote/blob/main/client/kmp/composeApp/src/commonMain/kotlin/org/calypsonet/keyple/demo/reload/remote/network/SimpleHttpNetworkClient.kt).
+For a full, runnable example including a `SyncNetworkClient` implementation over HTTP, see [SimpleHttpNetworkClient](https://github.com/calypsonet/keyple-demo-ticketing/blob/6495588dbe82e35eff578b5fe593c713fefc9a1a/src/reloading-remote/client/interop-mobile-multiplatform/composeApp/src/commonMain/kotlin/org/calypsonet/keyple/demo/reload/remote/network/SimpleHttpNetworkClient.kt).
 
 ## Documentation & Contribution Guide
 Full documentation available at [keyple.org](https://keyple.org)
